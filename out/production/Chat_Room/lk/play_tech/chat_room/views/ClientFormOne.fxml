@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lk.play_tech.chat_room.controllers.ClientFormOneController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #2C3333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.play_tech.chat_room.controllers.ClientFormOneController">
+   <children>
+      <AnchorPane layoutY="-2.0" prefHeight="33.0" prefWidth="600.0" style="-fx-background-color: #A5C9CA;">
+         <children>
+            <Label layoutX="14.0" layoutY="6.0" text="Client">
+               <font>
+                  <Font name="Calibri Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="564.0" layoutY="8.0" onMouseClicked="#img_close_on_clicked" pickOnBounds="true">
+               <image>
+                  <Image url="@../assets/close.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img_minimize" fitHeight="22.0" fitWidth="22.0" layoutX="540.0" layoutY="8.0" onMouseClicked="#img_minimize_on_clicked" pickOnBounds="true">
+               <image>
+                  <Image url="@../assets/minimize.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <JFXTextArea fx:id="txt_area" focusColor="WHITE" layoutX="16.0" layoutY="42.0" prefHeight="306.0" prefWidth="564.0" style="-fx-background-color: #E7F6F2;" unFocusColor="WHITE">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXTextArea>
+      <TextField fx:id="txtClientMassage" layoutX="16.0" layoutY="363.0" prefHeight="33.0" prefWidth="466.0" style="-fx-background-color: #A5C9CA;" />
+      <ImageView fx:id="imgSendImages" fitHeight="22.0" fitWidth="22.0" layoutX="453.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/camera.png" />
+         </image>
+      </ImageView>
+      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="496.0" layoutY="363.0" onAction="#btnSendOnAction" prefHeight="33.0" prefWidth="84.0" style="-fx-background-color: #E7F6F2;" text="Send">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
 </AnchorPane>

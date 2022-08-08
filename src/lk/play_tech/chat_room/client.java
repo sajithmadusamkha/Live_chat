@@ -21,5 +21,6 @@ public class client {
     }
 
     private void close_everything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+
     }
 }

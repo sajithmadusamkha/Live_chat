@@ -28,7 +28,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <JFXTextArea focusColor="WHITE" layoutX="16.0" layoutY="47.0" prefHeight="335.0" prefWidth="569.0" style="-fx-background-color: #E7F6F2;" unFocusColor="WHITE">
+      <JFXTextArea fx:id="txt_area" focusColor="WHITE" layoutX="14.0" layoutY="47.0" prefHeight="335.0" prefWidth="569.0" style="-fx-background-color: #E7F6F2;" unFocusColor="WHITE">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
