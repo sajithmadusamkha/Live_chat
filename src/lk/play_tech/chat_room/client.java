@@ -2,6 +2,7 @@ package lk.play_tech.chat_room;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class client {
     private Socket socket;
@@ -19,6 +20,14 @@ public class client {
             close_everything(socket, bufferedReader, bufferedWriter);
         }
     }
+
+/*    public void sendMassage() {
+        try {
+            bufferedWriter.write(userName);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        }
+    }*/
 
     private void close_everything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
 
