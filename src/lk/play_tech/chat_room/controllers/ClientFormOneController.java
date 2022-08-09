@@ -8,8 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientFormOneController {
@@ -19,11 +18,19 @@ public class ClientFormOneController {
     public ImageView imgSendImages;
 
     private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
+    private DataOutputStream dataOutputStream;
+    private DataInputStream dataInputStream;
     private String userName;
 
-    public ClientFormOneController(Socket socket) {
+    public ClientFormOneController(Socket socket, String userName) {
+        try {
+            this.socket = socket;
+            this.userName = userName;
+            this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            this.dataInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            closEverything(socket, dataInputStream, dataOutputStream);
+        }
     }
 
     @FXML

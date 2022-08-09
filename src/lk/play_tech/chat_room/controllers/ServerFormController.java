@@ -22,32 +22,28 @@ public class ServerFormController {
         this.serverSocket = serverSocket;
     }
 
-    public void initialize(){
-        try {
-            ServerSocket serverSocket = new ServerSocket(5000);
-            ServerFormController server = new ServerFormController(serverSocket);
-            server.start_server();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void initialize() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(5000);
+        ServerFormController server = new ServerFormController(serverSocket);
+        server.startServer();
     }
 
-    public void start_server(){
+    public void startServer(){
         try {
-            while (!serverSocket.isClosed()){
+            while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 txt_area.appendText("A new client has connected!");
-                ClientHandler client_handler = new ClientHandler(socket);
+                ClientHandler clientHandler = new ClientHandler(socket);
 
-                Thread thread = new Thread(client_handler);
+                Thread thread = new Thread(clientHandler);
                 thread.start();
             }
         } catch (IOException e) {
-
+            closeServerSocket();
         }
     }
 
-    public void close_server_socket(){
+    public void closeServerSocket() {
         try {
             if(serverSocket != null) {
                 serverSocket.close();

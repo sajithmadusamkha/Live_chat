@@ -8,66 +8,68 @@ public class ClientHandler implements Runnable{
 
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
-    private String user_name;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
+    private String clientUserName;
 
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.user_name = bufferedReader.readLine();
-            broadcast_massage("SERVER: " + user_name + "has entered the chat!");
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            this.clientUserName = dataInputStream.readUTF();
+            clientHandlers.add(this);
+            broadCastMassage("Server: " + clientUserName +"has entered the chat!");
         } catch (IOException e) {
-            close_everything(socket, bufferedReader, bufferedWriter);
+            closEverything(socket, dataInputStream, dataOutputStream);
         }
     }
 
     @Override
     public void run() {
-        String massage_from_client;
+        String massageFromClient;
 
-        while (socket.isConnected()){
+        while (socket.isConnected()) {
             try {
-                massage_from_client = bufferedReader.readLine();
-                broadcast_massage(massage_from_client);
+                massageFromClient = dataInputStream.readUTF();
+                broadCastMassage(massageFromClient);
             } catch (IOException e) {
-                close_everything(socket, bufferedReader, bufferedWriter);
+                closEverything(socket, dataInputStream, dataOutputStream);
                 break;
             }
         }
     }
 
-    public void broadcast_massage(String massage) {
-        for (ClientHandler clientHandler : clientHandlers) {
-            try {
-                if(!clientHandler.user_name.equals(user_name)){
-                    clientHandler.bufferedWriter.write(massage);
-                    clientHandler.bufferedWriter.newLine();
-                    clientHandler.bufferedWriter.flush();
+    public void broadCastMassage(String massageToSend) {
+        for(ClientHandler clientHandler : clientHandlers) {
+            try{
+                if(!clientHandler.clientUserName.equals(clientUserName)) {
+                    clientHandler.dataOutputStream.writeUTF("\n" + massageToSend);
+                    clientHandler.dataOutputStream.flush();
                 }
             } catch (IOException e) {
-                close_everything(socket, bufferedReader, bufferedWriter);
+                closEverything(socket, dataInputStream, dataOutputStream);
             }
         }
     }
 
-    public void remove_client_handler(){
+    public void removeClientHandler() {
         clientHandlers.remove(this);
-        broadcast_massage("SERVER: " + user_name + "has left the chat!");
+        broadCastMassage("Server:" + clientUserName + "has left the chat!");
     }
 
-    private void close_everything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
-        remove_client_handler();
+    private void closEverything(Socket socket, DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
+        removeClientHandler();
         try {
-            if(bufferedReader != null) {
-                bufferedReader.close();
+            if(dataInputStream != null) {
+                dataInputStream.close();
             }
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
+
+            if (dataOutputStream != null) {
+                dataOutputStream.close();
             }
-            if (socket != null) {
+
+            if(socket != null) {
                 socket.close();
             }
         } catch (IOException e) {
