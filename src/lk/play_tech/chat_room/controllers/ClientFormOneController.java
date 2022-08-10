@@ -48,7 +48,6 @@ public class ClientFormOneController extends Thread {
                     clientMassage.append(tokens[i]);
                 }
                 System.out.println(clientMassage);
-                //System.out.println("command= " + command + "  User name= " + lblUserName.getText());
                 if(!command.equalsIgnoreCase(lblUserName.getText()+": ")) {
                     txt_area.appendText(massage + "\n");
                 }
