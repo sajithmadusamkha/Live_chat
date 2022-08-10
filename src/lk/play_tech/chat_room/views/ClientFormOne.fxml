@@ -13,7 +13,7 @@
    <children>
       <AnchorPane layoutY="-2.0" prefHeight="33.0" prefWidth="600.0" style="-fx-background-color: #A5C9CA;">
          <children>
-            <Label layoutX="14.0" layoutY="6.0" text="Client">
+            <Label fx:id="lblUserName" layoutX="16.0" layoutY="6.0" prefHeight="22.0" prefWidth="166.0" text="Client">
                <font>
                   <Font name="Calibri Bold" size="18.0" />
                </font>
@@ -31,9 +31,9 @@
             <Image url="@../assets/camera.png" />
          </image>
       </ImageView>
-      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="496.0" layoutY="363.0" onAction="#btnSendOnAction" prefHeight="33.0" prefWidth="84.0" style="-fx-background-color: #E7F6F2;" text="Send">
+      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="496.0" layoutY="362.0" onAction="#btnSendOnAction" prefHeight="33.0" prefWidth="84.0" style="-fx-background-color: #E7F6F2;" text="Send">
          <font>
-            <Font name="Calibri Bold" size="14.0" />
+            <Font name="Calibri Bold" size="18.0" />
          </font>
       </JFXButton>
    </children>

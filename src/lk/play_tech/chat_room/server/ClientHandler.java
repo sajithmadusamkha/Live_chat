@@ -33,7 +33,7 @@ public class ClientHandler extends Thread{
                     c.printWriter.println(massage);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
