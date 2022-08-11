@@ -1,12 +1,21 @@
 package lk.play_tech.chat_room.controllers;
 
 import com.jfoenix.controls.JFXTextArea;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -17,6 +26,7 @@ public class ClientFormOneController extends Thread {
     public TextField txtClientMassage;
     public ImageView imgSendImages;
     public Label lblUserName;
+    public VBox vBox;
 
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
@@ -48,9 +58,45 @@ public class ClientFormOneController extends Thread {
                     clientMassage.append(tokens[i]);
                 }
                 System.out.println(clientMassage);
-                if(!command.equalsIgnoreCase(lblUserName.getText()+": ")) {
-                    txt_area.appendText(massage + "\n");
+
+                String[] massageAr = massage.split(" ");
+                String string = "";
+                for(int i = 0; i < massageAr.length; i++) {
+                    string += massageAr[i+1] + " ";
                 }
+
+                Text text = new Text(string);
+                String fChar = "";
+                if(string.length() > 3) {
+                    fChar = string.substring(0,3);
+                }
+
+                TextFlow tempTextFlow = new TextFlow();
+
+                if(!command.equalsIgnoreCase(lblUserName.getText()+": ")) {
+                    Text name = new Text(command + " ");
+                    name.getStyleClass().add("name");
+                    tempTextFlow.getChildren().add(name);
+                }
+
+                tempTextFlow.getChildren().add(text);
+                tempTextFlow.setMaxWidth(200);
+
+                TextFlow textFlow = new TextFlow(tempTextFlow);
+                HBox hBox = new HBox(12);
+
+                if(!command.equalsIgnoreCase(lblUserName.getText() + ": ")) {
+                    vBox.setAlignment(Pos.TOP_LEFT);
+                    hBox.setAlignment(Pos.CENTER_LEFT);
+                    hBox.getChildren().add(textFlow);
+                } else {
+                    Text text1 = new Text(clientMassage + ":Me");
+                    TextFlow textFlow1 = new TextFlow(text1);
+                    hBox.setAlignment(Pos.BOTTOM_RIGHT);
+                    hBox.getChildren().add(textFlow1);
+                }
+
+                Platform.runLater(() -> vBox.getChildren().addAll(hBox));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +107,6 @@ public class ClientFormOneController extends Thread {
     public void btnSendOnAction(ActionEvent actionEvent) throws IOException {
         String massage = txtClientMassage.getText();
         printWriter.println(lblUserName.getText() + ": " + massage);
-        txt_area.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        txt_area.appendText("Me: " + massage + "\n");
         txtClientMassage.clear();
         printWriter.flush();
         if(massage.equalsIgnoreCase("exit")) {
@@ -71,4 +115,9 @@ public class ClientFormOneController extends Thread {
         }
     }
 
+    public void imgImageSendMouseClicked(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+    }
 }

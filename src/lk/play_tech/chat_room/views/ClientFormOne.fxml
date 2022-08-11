@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="408.0" prefWidth="600.0" style="-fx-background-color: #2C3333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.play_tech.chat_room.controllers.ClientFormOneController">
@@ -20,13 +20,8 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextArea fx:id="txt_area" focusColor="WHITE" layoutX="16.0" layoutY="42.0" prefHeight="306.0" prefWidth="564.0" style="-fx-background-color: #E7F6F2;" unFocusColor="WHITE">
-         <font>
-            <Font name="Calibri" size="14.0" />
-         </font>
-      </JFXTextArea>
       <TextField fx:id="txtClientMassage" layoutX="16.0" layoutY="363.0" prefHeight="33.0" prefWidth="466.0" style="-fx-background-color: #A5C9CA;" />
-      <ImageView fx:id="imgSendImages" fitHeight="22.0" fitWidth="22.0" layoutX="453.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgSendImages" fitHeight="22.0" fitWidth="22.0" layoutX="453.0" layoutY="368.0" onMouseClicked="#imgImageSendMouseClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/camera.png" />
          </image>
@@ -36,5 +31,6 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </JFXButton>
+      <VBox fx:id="vBox" layoutX="17.0" layoutY="48.0" prefHeight="296.0" prefWidth="561.0" style="-fx-background-color: #E7F6F2;" />
    </children>
 </AnchorPane>
