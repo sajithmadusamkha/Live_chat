@@ -58,7 +58,7 @@ public class ClientFormOneController extends Thread {
 
                 StringBuilder clientMassage = new StringBuilder();
                 for (int i = 1; i < tokens.length; i++) {
-                    clientMassage.append(tokens[i]);
+                    clientMassage.append(tokens[i] + " ");
                 }
 
                 String[] massageAr = massage.split(" ");
@@ -92,17 +92,18 @@ public class ClientFormOneController extends Thread {
                         vBox.setAlignment(Pos.TOP_LEFT);
                         hBox.setAlignment(Pos.CENTER_LEFT);
 
-                        Text text1 = new Text(" " + command + " :");
+                        Text text1 = new Text("  " + command + " :");
                         hBox.getChildren().add(text1);
                         hBox.getChildren().add(imageView);
                     } else {
                         hBox.setAlignment(Pos.BOTTOM_RIGHT);
                         hBox.getChildren().add(imageView);
-                        Text text1 = new Text(":Me");
+                        Text text1 = new Text(": Me ");
                         hBox.getChildren().add(text1);
                     }
 
                     Platform.runLater(() -> vBox.getChildren().addAll(hBox));
+
                 } else {
                     TextFlow tempTextFlow = new TextFlow();
 
@@ -123,7 +124,7 @@ public class ClientFormOneController extends Thread {
                         hBox.setAlignment(Pos.CENTER_LEFT);
                         hBox.getChildren().add(textFlow);
                     } else {
-                        Text text1 = new Text(massage + ":Me");
+                        Text text1 = new Text(clientMassage + ": Me");
                         TextFlow textFlow1 = new TextFlow(text1);
                         hBox.setAlignment(Pos.BOTTOM_RIGHT);
                         hBox.getChildren().add(textFlow1);
@@ -154,5 +155,6 @@ public class ClientFormOneController extends Thread {
         chooser.setTitle("Open Image");
         this.path = chooser.showOpenDialog(stage);
         printWriter.println(lblUserName.getText() + " " + "img" + path.getPath());
+        printWriter.flush();
     }
 }
