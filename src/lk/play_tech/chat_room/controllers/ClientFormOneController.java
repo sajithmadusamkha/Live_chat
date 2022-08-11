@@ -23,7 +23,6 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientFormOneController extends Thread {
-    public JFXTextArea txt_area;
     public TextField txtClientMassage;
     public ImageView imgSendImages;
     public Label lblUserName;
