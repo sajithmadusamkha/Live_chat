@@ -55,12 +55,11 @@ public class ClientFormOneController extends Thread {
                 String massage = bufferedReader.readLine();
                 String[] tokens = massage.split(" ");
                 String command = tokens[0];
-                //System.out.println(command);
+
                 StringBuilder clientMassage = new StringBuilder();
                 for (int i = 1; i < tokens.length; i++) {
                     clientMassage.append(tokens[i]);
                 }
-                //System.out.println(clientMassage);
 
                 String[] massageAr = massage.split(" ");
                 String string = "";

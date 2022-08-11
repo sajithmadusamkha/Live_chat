@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,6 +32,10 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </JFXButton>
-      <VBox fx:id="vBox" layoutX="17.0" layoutY="48.0" prefHeight="296.0" prefWidth="561.0" style="-fx-background-color: #E7F6F2;" />
+      <ScrollPane layoutX="16.0" layoutY="47.0" prefHeight="300.0" prefWidth="565.0">
+         <content>
+            <VBox fx:id="vBox" prefHeight="283.0" prefWidth="552.0" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
