@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -31,6 +32,8 @@ public class ClientFormOneController extends Thread {
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private Socket socket;
+    private FileChooser chooser;
+    private  File path;
 
     public void initialize() {
         String userName = LoginFormController.userName;
@@ -52,51 +55,82 @@ public class ClientFormOneController extends Thread {
                 String massage = bufferedReader.readLine();
                 String[] tokens = massage.split(" ");
                 String command = tokens[0];
-                System.out.println(command);
+                //System.out.println(command);
                 StringBuilder clientMassage = new StringBuilder();
                 for (int i = 1; i < tokens.length; i++) {
                     clientMassage.append(tokens[i]);
                 }
-                System.out.println(clientMassage);
+                //System.out.println(clientMassage);
 
                 String[] massageAr = massage.split(" ");
                 String string = "";
-                for(int i = 0; i < massageAr.length; i++) {
+                for(int i = 0; i < massageAr.length-1; i++) {
                     string += massageAr[i+1] + " ";
                 }
 
                 Text text = new Text(string);
                 String fChar = "";
+
                 if(string.length() > 3) {
                     fChar = string.substring(0,3);
                 }
 
-                TextFlow tempTextFlow = new TextFlow();
+                if(fChar.equalsIgnoreCase("img")) {
+                    string = string.substring(3, string.length() - 1);
 
-                if(!command.equalsIgnoreCase(lblUserName.getText()+": ")) {
-                    Text name = new Text(command + " ");
-                    name.getStyleClass().add("name");
-                    tempTextFlow.getChildren().add(name);
-                }
+                    File file = new File(string);
+                    Image image = new Image(file.toURI().toString());
 
-                tempTextFlow.getChildren().add(text);
-                tempTextFlow.setMaxWidth(200);
+                    ImageView imageView = new ImageView(image);
 
-                TextFlow textFlow = new TextFlow(tempTextFlow);
-                HBox hBox = new HBox(12);
+                    imageView.setFitWidth(150);
+                    imageView.setFitHeight(200);
 
-                if(!command.equalsIgnoreCase(lblUserName.getText() + ": ")) {
-                    vBox.setAlignment(Pos.TOP_LEFT);
-                    hBox.setAlignment(Pos.CENTER_LEFT);
-                    hBox.getChildren().add(textFlow);
-                } else {
-                    Text text1 = new Text(clientMassage + ":Me");
-                    TextFlow textFlow1 = new TextFlow(text1);
+                    HBox hBox = new HBox(10);
                     hBox.setAlignment(Pos.BOTTOM_RIGHT);
-                    hBox.getChildren().add(textFlow1);
-                }
 
-                Platform.runLater(() -> vBox.getChildren().addAll(hBox));
+                    if(!command.equalsIgnoreCase(lblUserName.getText())) {
+                        vBox.setAlignment(Pos.TOP_LEFT);
+                        hBox.setAlignment(Pos.CENTER_LEFT);
+
+                        Text text1 = new Text(" " + command + " :");
+                        hBox.getChildren().add(text1);
+                        hBox.getChildren().add(imageView);
+                    } else {
+                        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+                        hBox.getChildren().add(imageView);
+                        Text text1 = new Text(":Me");
+                        hBox.getChildren().add(text1);
+                    }
+
+                    Platform.runLater(() -> vBox.getChildren().addAll(hBox));
+                } else {
+                    TextFlow tempTextFlow = new TextFlow();
+
+                    if (!command.equalsIgnoreCase(lblUserName.getText() + ":")) {
+                        Text name = new Text(command + " ");
+                        name.getStyleClass().add("name");
+                        tempTextFlow.getChildren().add(name);
+                    }
+
+                    tempTextFlow.getChildren().add(text);
+                    tempTextFlow.setMaxWidth(200);
+
+                    TextFlow textFlow = new TextFlow(tempTextFlow);
+                    HBox hBox = new HBox(12);
+
+                    if(!command.equalsIgnoreCase(lblUserName.getText() + ":")) {
+                        vBox.setAlignment(Pos.TOP_LEFT);
+                        hBox.setAlignment(Pos.CENTER_LEFT);
+                        hBox.getChildren().add(textFlow);
+                    } else {
+                        Text text1 = new Text(massage + ":Me");
+                        TextFlow textFlow1 = new TextFlow(text1);
+                        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+                        hBox.getChildren().add(textFlow1);
+                    }
+                    Platform.runLater(() -> vBox.getChildren().addAll(hBox));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +151,9 @@ public class ClientFormOneController extends Thread {
 
     public void imgImageSendMouseClicked(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Image");
+        chooser = new FileChooser();
+        chooser.setTitle("Open Image");
+        this.path = chooser.showOpenDialog(stage);
+        printWriter.println(lblUserName.getText() + " " + "img" + path.getPath());
     }
 }
